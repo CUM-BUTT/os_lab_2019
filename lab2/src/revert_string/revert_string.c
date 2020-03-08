@@ -13,3 +13,5 @@ str[strlen(str)-1-i]=buff[i];
 // *str=*buff;
 // your code here
 }
+//./random.sh
+//./average.sh $(cat numbers.txt)
