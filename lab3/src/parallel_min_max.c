@@ -40,16 +40,29 @@ int main(int argc, char **argv) {
         switch (option_index) {
           case 0:
             seed = atoi(optarg);
+            if (seed <= 0) 
+            {
+                printf("seed is a positive number\n");
+            return 1;
+            } 
             // your code here
             // error handling
             break;
           case 1:
             array_size = atoi(optarg);
+            if (array_size <= 0) {
+                printf("array_size is a positive number\n");
+            return 1;
+            }
             // your code here
             // error handling
             break;
           case 2:
             pnum = atoi(optarg);
+            if (pnum != 3) {
+            printf("Usage: %s seed arraysize\n", argv[0]);
+            return 1;
+            }
             // your code here
             // error handling
             break;
