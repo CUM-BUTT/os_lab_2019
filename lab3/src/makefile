@@ -1,3 +1,5 @@
+all: sequential_min_max parallel_min_max 
+
 CC=gcc -std=c99
 CFLAGS=-I.
 
