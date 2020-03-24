@@ -8,6 +8,6 @@ gcc -std=c99 find_min_max.c parallel_min_max.c utils.c -o 3_task
 
 git add ./src
 git push
-CUM_BUTT
+CUM-BUTT
 1809-1832i
 git commit -m 3_task
