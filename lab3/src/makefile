@@ -1,4 +1,4 @@
-CC=gcc
+CC=gcc -std=c99
 CFLAGS=-I.
 
 sequential_min_max : utils.o find_min_max.o utils.h find_min_max.h
