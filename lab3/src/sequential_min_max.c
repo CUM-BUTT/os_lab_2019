@@ -1,10 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <errno.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
 #include "find_min_max.h"
 #include "utils.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv) 
+{
+
+  printf(" CHILD: Это процесс-потомок!\n");
+          printf(" CHILD: Мой PID -- %d\n", getpid());
+          printf(" CHILD: PID моего родителя -- %d\n",
+              getppid());
   if (argc != 3) {
     printf("Usage: %s seed arraysize\n", argv[0]);
     return 1;

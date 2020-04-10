@@ -5,5 +5,6 @@
 
 void main(){
    if (fork()==0) wait(0);
-    else execl("sequential_min_max","sequential_min_max","10","10",NULL); /* порожденный процесс */
+    //else execl("sequential_min_max","sequential_min_max","10","10",NULL); /* порожденный процесс */
+    else execl("1_task","sequential_min_max","10","10",NULL); /* порожденный процесс */
 }
