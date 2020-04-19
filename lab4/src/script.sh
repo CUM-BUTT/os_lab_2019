@@ -15,4 +15,4 @@ git add ./
 git push
 CUM-BUTT
 1809-1832i
-git commit -m 3_task
+git commit -m zombies_done
