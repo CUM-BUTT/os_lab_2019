@@ -4,14 +4,20 @@
 
 int main ()
 {
-  pid_t child_pid;
+    pid_t child_pid;
+    printf("parent id =%d\n",getpid());
+    for(int i = 0;i<10;i++)
+    {
 
-  child_pid = fork ();
-  if (child_pid > 0) {
-    sleep (60);
-  }
-  else {
-    exit (0);
-  }
-  return 0;
+        child_pid = fork ();
+        if (child_pid == 0) 
+        {   
+            printf("child id =%d\n",getpid());
+            exit (0);
+        }
+
+    }
+    sleep(60);
+    return 0;
 }
+//ps -ax
