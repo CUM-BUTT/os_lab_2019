@@ -2,7 +2,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <sys/time.h>
 #include <pthread.h>
+//-------------------
+#include <ctype.h>
+#include <limits.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#include <getopt.h>
 
 struct SumArgs {
   int *array;
@@ -10,9 +25,19 @@ struct SumArgs {
   int end;
 };
 
+pthread_mutex_t mutex;
+
 int Sum(const struct SumArgs *args) {
   int sum = 0;
   // TODO: your code here 
+    int n = args->end - args->begin;
+    pthread_t threads[n];
+    for(int i = args->begin; i < n; i++)
+    {
+        pthread_mutex_lock(&mutex);
+        sum += args->array[i];
+        pthread_mutex_unlock(&mutex);
+    }
   return sum;
 }
 
@@ -22,17 +47,91 @@ void *ThreadSum(void *args) {
 }
 
 int main(int argc, char **argv) {
-  /*
-   *  TODO:
-   *  threads_num by command line arguments
-   *  array_size by command line arguments
-   *	seed by command line arguments
-   */
+    int seed = -1;
+  int array_size = -1;
+  int threads_num = -1;
 
-  uint32_t threads_num = 0;
-  uint32_t array_size = 0;
-  uint32_t seed = 0;
+  while (true) {
+    int current_optind = optind ? optind : 1;
+
+    static struct option options[] = {{"seed", required_argument, 0, 0},
+                                      {"array_size", required_argument, 0, 0},
+                                      {"thread_num", required_argument, 0, 0},
+                                      {0, 0, 0, 0}};
+
+    int option_index = 0;
+    int c = getopt_long(argc, argv, "f", options, &option_index);
+
+    if (c == -1) break;
+
+    switch (c) {
+      case 0:
+        switch (option_index) {
+          case 0:
+            seed = atoi(optarg);
+            // your code here
+            if (seed <= 0) {
+            printf("seed is a positive number\n");
+            return 1;
+            }
+            // error handling
+            break;
+          case 1:
+            array_size = atoi(optarg);
+            // your code here
+            if (array_size <= 0) {
+            printf("array_size is a positive number\n");
+            return 1;
+            }
+            // error handling
+            break;
+          case 2:
+            threads_num = atoi(optarg);
+            // your code here
+            if (threads_num < 1) {
+            printf("at least 1 parallel process should be started\n");
+            return 1;
+            }
+            // error handling
+            break;
+
+          defalut:
+            printf("Index %d is out of options\n", option_index);
+        }
+        break;
+
+      case '?':
+        break;
+
+      default:
+        printf("getopt returned character code 0%o?\n", c);
+    }
+  }
+
+  if (optind < argc) {
+    printf("Has at least one no option argument\n");
+    return 1;
+  }
+
+  if (seed == -1 || array_size == -1 || threads_num == -1) {
+    printf("Usage: %s --seed \"num\" --array_size \"num\" --pnum \"num\" \n",
+           argv[0]);
+    return 1;
+  }
+
+  if(threads_num > array_size)
+  {
+      threads_num = array_size;
+  }
   pthread_t threads[threads_num];
+  int *array = malloc(sizeof(int) * array_size);
+  GenerateArray(array, array_size, seed);
+//   GenerateArray ниже
+
+
+
+
+ 
 
   /*
    * TODO:
@@ -40,7 +139,7 @@ int main(int argc, char **argv) {
    * Generate array here
    */
 
-  int *array = malloc(sizeof(int) * array_size);
+
 
   struct SumArgs args[threads_num];
   for (uint32_t i = 0; i < threads_num; i++) {
@@ -51,6 +150,9 @@ int main(int argc, char **argv) {
   }
 
   int total_sum = 0;
+ 
+  struct timeval start_time;
+  gettimeofday(&start_time, NULL); //get time
   for (uint32_t i = 0; i < threads_num; i++) {
     int sum = 0;
     pthread_join(threads[i], (void **)&sum);
