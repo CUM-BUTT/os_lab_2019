@@ -123,9 +123,7 @@ int main(int argc, char **argv) {
   {
       threads_num = array_size;
   }
-  pthread_t threads[threads_num];
-  int *array = malloc(sizeof(int) * array_size);
-  GenerateArray(array, array_size, seed);
+
 //   GenerateArray ниже
 
 
@@ -140,10 +138,16 @@ int main(int argc, char **argv) {
    */
 
 
-
+  pthread_t threads[threads_num];
+  int *array = malloc(sizeof(int) * array_size);
+  GenerateArray(array, array_size, seed);
   struct SumArgs args[threads_num];
-  for (uint32_t i = 0; i < threads_num; i++) {
-    if (pthread_create(&threads[i], NULL, ThreadSum, (void *)&args)) {
+  for (uint32_t i = 0; i < threads_num; i++) 
+  {
+    args[i].array = array;
+    args[i].begin = array_size/threads_num*i;
+    args[i].end = array_size/threads_num*(i+1);
+    if (pthread_create(&threads[i], NULL, ThreadSum, (void *)&args[i])) {
       printf("Error: pthread_create failed!\n");
       return 1;
     }
@@ -158,8 +162,15 @@ int main(int argc, char **argv) {
     pthread_join(threads[i], (void **)&sum);
     total_sum += sum;
   }
+  struct timeval finish_time;
+  gettimeofday(&finish_time, NULL);
+
+  double elapsed_time = (finish_time.tv_sec - start_time.tv_sec) * 1000.0;
+  elapsed_time += (finish_time.tv_usec - start_time.tv_usec) / 1000.0;
 
   free(array);
+
+  printf("Elapsed time: %fms\n", elapsed_time);
   printf("Total: %d\n", total_sum);
   return 0;
 }
