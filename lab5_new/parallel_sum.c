@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
                                       {"seed", required_argument, 0, 0},
                                       {"array_size", required_argument, 0, 0},
                                       {0, 0, 0, 0}};
-
+    //./parallel_sum --seed "10" --array_size "10" --threads_num "10"
     int option_index = 0;
     int c = getopt_long(argc, argv, "f", options, &option_index);
 
