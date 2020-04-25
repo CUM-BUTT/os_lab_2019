@@ -12,4 +12,6 @@ EOF
 git commit -m "add lab5 new"
 
 #cd cpp-hello-world/lab5_new
-#chmod ugo+x script.sh
+#chmod ugo+x script.sh 
+#git config credential.helper store
+#git config credential.helper store
