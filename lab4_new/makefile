@@ -14,6 +14,9 @@ libsum: ./libsum/sum.c
 task1:
 	make -F ./task1/makefile
 
+task2: zombie.c
+	gcc -std=c99 zombie.c -o zombie
+
 task3: process_memory.c
 	gcc -o process_memory.out process_memory.c
 
