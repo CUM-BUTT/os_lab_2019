@@ -6,6 +6,6 @@ git push
 git commit -m "done lab5"
 
 #cd cpp-hello-world/lab5/src
-#./parallel_sum --seed "10" --array_size "10" --threads_num "6"
+#./parallel_fac.out --k "21" --pnum "3" --mod "6"
 #chmod ugo+x script.sh 
 #git config credential.helper store
