@@ -27,7 +27,7 @@ int main() {
     exit(1);
   }
 
-  if (pthread_create(&thread3, NULL, (void *)do3, NULL) != 0) {
+  if (pthread_create(&thread3, NULL, (void *)do1, NULL) != 0) {
     perror("pthread_create");
     exit(1);
   }
@@ -42,42 +42,59 @@ int main() {
     exit(1);
   }
 
-  if (pthread_join(thread3, NULL) != 0) {
+  /*if (pthread_join(thread3, NULL) != 0) {
     perror("pthread_join");
     exit(1);
-  }
+  }*/
 
   return 0;
 }
 
 void do1() {
     pthread_mutex_lock(&mut2);
-    printf("thread 1, lock  mut2\n");
+    printf("thread 1, getting var1\n");
+ 
     sleep(2);   // чтобы второй поток успел залочить mut2
-    pthread_mutex_lock(&mut3);
-    
+ 
+
     pthread_mutex_unlock(&mut3);
+    //pthread_mutex_unlock(&mut2);
 	pthread_mutex_unlock(&mut2);
-    printf("do1 finished\n");
 }
 
 void do2() {
-    pthread_mutex_lock(&mut3);
-    printf("thread 2, lock  mut3\n");
-    sleep(1);   // чтобы второй поток успел залочить mut2
     pthread_mutex_lock(&mut1);
-    
-    pthread_mutex_unlock(&mut1);
-	pthread_mutex_unlock(&mut3);
-    printf("do2 finished\n");
+    printf("thread 2, getting var1\n");
+    sleep(1);   // чтобы второй поток успел залочить mut2;
+
+
+    pthread_mutex_lock(&mut3);
+
+
+    pthread_mutex_unlock(&mut3);
+    //pthread_mutex_unlock(&mut3);
+	pthread_mutex_unlock(&mut1);
 }
 
 void do3() {
+    int temp1;
+    int temp2;
+    int temp3;
     pthread_mutex_lock(&mut1);
-    printf("thread 3, lock  mut1\n");
+    printf("thread 3, lock 2\n");
+    temp1 = var1;
+    //sleep(1);   // чтобы второй поток успел залочить mut2
+    //pthread_mutex_lock(&mut1);
+    temp2 = var2;
+    printf("thread 1, getting var2\n");
+    printf("thread 1: sum = %d\n", temp1 + temp2);
+
     pthread_mutex_lock(&mut2);
-    
+    temp3 = var3;
+    printf("thread 1, getting var2\n");
+    printf("thread 1: sum = %d\n", temp1 + temp2);
+
     pthread_mutex_unlock(&mut2);
+    //pthread_mutex_unlock(&mut1);
 	pthread_mutex_unlock(&mut1);
-    printf("do3 finished\n");
 }

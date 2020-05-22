@@ -4,10 +4,9 @@
 #include <pthread.h>
 #include <getopt.h>
 #include <math.h>
-#include <semaphore.h>
 
 static uint64_t res = 1;
-sem_t semaphore;
+static pthread_mutex_t fac_mtx = PTHREAD_MUTEX_INITIALIZER;
 
 typedef struct {
   pthread_t thread;
@@ -33,14 +32,14 @@ static uint64_t MultModulo(uint64_t a, uint64_t b, uint64_t mod) {
 static void fac_threaded(fac_thread_t* f) {
   printf("Thread: id=%lu from %lu to %lu\n", f->thread, f->begin, f->end - 1);
   for (uint64_t i = f->begin; i < f->end; i++) {
-    sem_wait(&semaphore);
+    pthread_mutex_lock(&fac_mtx);
     res = MultModulo(res, i, f->mod);
     if (!res) {
       printf("(i=%lu)\n", i);
-      sem_post(&semaphore);
+      pthread_mutex_unlock(&fac_mtx);
       return;
     }
-    sem_post(&semaphore);
+    pthread_mutex_unlock(&fac_mtx);
   }
 }
 
@@ -116,7 +115,6 @@ int main(int argc, char* argv[]) {
 
   float block = (float)k / pnum;
   fac_thread_t thread_pool[pnum];
-  sem_init(&semaphore, 0, 1);
 
   for (uint32_t i = 0; i < pnum; i++) {
     int begin = round(block * (float)i) + 1;
@@ -137,7 +135,7 @@ int main(int argc, char* argv[]) {
       printf("Error: cannot join thread %d\n", i);
       return -1;
     }
-  sem_destroy(&semaphore);
+
   if (res)
     printf("%lu! mod %d = %lu\n", k, mod, res);
 }
