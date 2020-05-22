@@ -3,7 +3,7 @@
 git config credential.helper store
 git add ./
 git push
-git commit -m "done lab5"
+git commit -m "start lab6"
 
 #cd cpp-hello-world/lab6/src
 #./parallel_fac.out --k "21" --pnum "3" --mod "6"
