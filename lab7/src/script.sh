@@ -12,4 +12,4 @@ make
 #git config credential.helper store
 
 #./tcpclient.out --buf_size 10 --port 1488 --ip 93.80.179.190
-#./tcpserver.out --buf_size 10 --port 1488
+#./tcpserver.out --buf_size 10 --port 1488 --ip 93.80.179.190
