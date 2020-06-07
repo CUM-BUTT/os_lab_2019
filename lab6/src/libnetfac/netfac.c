@@ -1,11 +1,11 @@
 #include "netfac.h"
 
-struct sockaddr_in create_sockaddr(uint16_t port, uint32_t s_addr) {
-  struct sockaddr_in sockaddr = {
-    .sin_family = AF_INET, /* Always */
-    .sin_port = htons(port), /* Host to network short */
-    .sin_addr.s_addr = htonl(s_addr), /* Host to network long */
-    .sin_zero = {0}
+struct sockaddr_in6 create_sockaddr(uint16_t port, uint64_t s_addr) {
+  struct sockaddr_in6 sockaddr = {
+    .sin6_family = AF_INET6, /* Always */
+    .sin6_port = htons(port), /* Host to network short */
+    .sin6_addr.s6_addr = htonl(s_addr), /* Host to network long */
+    //.sin_zero = {0}
   };
   return sockaddr;
 }

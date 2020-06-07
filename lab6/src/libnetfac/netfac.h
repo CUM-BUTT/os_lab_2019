@@ -31,7 +31,7 @@ typedef struct fac_server fac_server_t;
 typedef struct fac_server_list fac_server_list_t;
 typedef struct fac_args fac_args_t;
 
-struct sockaddr_in create_sockaddr(uint16_t port, uint32_t s_addr);
+struct sockaddr_in6 create_sockaddr(uint16_t port,uint64_t /*uint32_t*/ s_addr);
 uint64_t MultModulo(uint64_t a, uint64_t b, uint64_t mod);
 
 #endif

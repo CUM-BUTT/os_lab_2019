@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  int server_fd = socket(AF_INET, SOCK_STREAM, 0);  
+  int server_fd = socket(AF_INET6, SOCK_STREAM, 0);  
   /* AF_INET - IPv4, SOCK_STREAM - bidirectional, 0 - use 
    *  AF_INET option to determine protocol
    * byte streams, supports connections
@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  struct sockaddr_in server = create_sockaddr(port, INADDR_ANY);
+  struct sockaddr_in6 server = create_sockaddr(port, INADDR_ANY);
 
   int opt_val = 1;
   /* Set socket flags:

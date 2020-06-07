@@ -219,14 +219,14 @@ int main(int argc, char **argv) {
     server->args.mod = mod;
 
     /* Prepare socket */
-    struct sockaddr_in server_sockaddr = create_sockaddr(server->port, 0);
-    if (!inet_aton(server->ip, &server_sockaddr.sin_addr)) {
+    struct sockaddr_in6 server_sockaddr = create_sockaddr(server->port, 0);
+    if (!inet_aton(server->ip, &server_sockaddr.sin6_addr)) {
       printf("Error: cannot translate %s into int value\n", server->ip);
       return -1;
     }
 
     /* Socket for every server */
-    int sck = socket(AF_INET, SOCK_STREAM, 0);
+    int sck = socket(AF_INET6, SOCK_STREAM, 0);
     if (sck < 0) {
       fprintf(stderr, "Socket creation failed!\n");
       exit(1);
