@@ -222,7 +222,7 @@ int main(int argc, char **argv) {
     struct sockaddr_in6 server_sockaddr = create_sockaddr(server->port, 0);
     if (!inet_aton(server->ip, &server_sockaddr.sin6_addr)) {
       printf("Error: cannot translate %s into int value\n", server->ip);
-      return -1;
+      //return -1;
     }
 
     /* Socket for every server */
