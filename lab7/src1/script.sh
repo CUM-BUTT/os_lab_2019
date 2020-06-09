@@ -14,5 +14,5 @@ git commit -m "start lab6"
 #./udpclient --port 20001 --bufsize 4 --ip 127.0.0.1
 #./udpserver --port 20001 --bufsize 4
 
-#./tcpclient --port 20001 --bufsize 4 --ip 127.0.0.1
-#./tcpserver --port 20001 --bufsize 4
+#./tcpclient --port 20004 --bufsize 4 --ip 127.0.0.1
+#./tcpserver --port 20004 --bufsize 4

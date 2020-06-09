@@ -92,7 +92,8 @@ int main(int argc, char *argv[]) {
 
     //могут использоваться для получения данных, независимо от того, 
     //является ли сокет ориентированным на соединения или нет.
-    sleep(60);
+    sleep(1);
+    exit(1);
     if ((n = recvfrom(sockfd, mesg, BUFSIZE, 0, (SADDR *)&cliaddr, &len)) < 0) {
       perror("recvfrom problem (SOCK_DGRAM)");
       exit(1);
@@ -117,6 +118,7 @@ int main(int argc, char *argv[]) {
         close(sockfd);
 
         sleep(1);
+        
 
         if ((sockfd2 = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
             perror("socket problem (SOCK_DGRAM)");
