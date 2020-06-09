@@ -92,6 +92,7 @@ int main(int argc, char *argv[]) {
 
     //могут использоваться для получения данных, независимо от того, 
     //является ли сокет ориентированным на соединения или нет.
+    sleep(60);
     if ((n = recvfrom(sockfd, mesg, BUFSIZE, 0, (SADDR *)&cliaddr, &len)) < 0) {
       perror("recvfrom problem (SOCK_DGRAM)");
       exit(1);

@@ -87,12 +87,17 @@ int main(int argc, char *argv[]) {
     perror("connect problem (SOCK_STREAM)");
     exit(1);
   }
-
-  write(1, "Input message to send: \n", 22);
-  while ((nread = read(0, buf, BUFSIZE)) > 0) {
-    if (write(fd, buf, nread) < 0) {
-      perror("write problem (SOCK_STREAM)");
-      exit(1);
+  
+  while(1)
+  {
+    write(1, "Input message to send: \n", 22);
+    while ((nread = read(0, buf, BUFSIZE)) > 0)
+    {
+      if (write(fd, buf, nread) < 0) {
+        perror("write problem (SOCK_STREAM)");
+        exit(1);
+      }
+      break;
     }
   }
 

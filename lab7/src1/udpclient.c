@@ -85,17 +85,22 @@ int main(int argc, char **argv) {
     perror("socket problem (SOCK_DGRAM)");
     exit(1);
   }
+    while(1)
+    {
+        write(1, "Enter string: \n", 13);
 
-  write(1, "Enter string: \n", 13);
-
-  while ((n = read(0, sendline, BUFSIZE)) > 0) {
-    //отправляет сообщения в сокет  
-    //соединение не обязательно
-    if (sendto(sockfd, sendline, n, 0, (SADDR *)&servaddr, SLEN) == -1) {
-      perror("sendto problem (SOCK_DGRAM)");
-      exit(1);
-    }
-    sleep(1);
+        while ((n = read(0, sendline, BUFSIZE)) > 0) 
+        {
+            //отправляет сообщения в сокет  
+            //соединение не обязательно
+            if (sendto(sockfd, sendline, n, 0, (SADDR *)&servaddr, SLEN) == -1) 
+            {
+              perror("sendto problem (SOCK_DGRAM)");
+              exit(1);
+            }
+            break;
+        }
+    //sleep(1);
 
     /*виснет, если не получили ответ от сервера
     //могут использоваться для получения данных, независимо от того, 

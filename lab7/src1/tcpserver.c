@@ -100,8 +100,10 @@ int main(int argc, char *argv[]) {
       exit(1);
     }
     printf("connection established (SOCK_STREAM)\n");
-
+    
+    
     while ((nread = read(cfd, buf, BUFSIZE)) > 0) {
+      sleep(60);
       write(1, &buf, nread);
     }
 
