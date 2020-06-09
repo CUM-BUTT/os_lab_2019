@@ -10,5 +10,9 @@ git commit -m "start lab6"
 #chmod ugo+x script.sh 
 #chmod ugo+x run.sh 
 #git config credential.helper store
+
 #./udpclient --port 20001 --bufsize 4 --ip 127.0.0.1
 #./udpserver --port 20001 --bufsize 4
+
+#./tcpclient --port 20001 --bufsize 4 --ip 127.0.0.1
+#./tcpserver --port 20001 --bufsize 4
